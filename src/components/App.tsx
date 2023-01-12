@@ -1,41 +1,30 @@
+import React from 'react';
 import '../styles/App.css';
 import { useState, useEffect } from 'react';
-import { Fruits, Fruit } from '../interfaces';
+import { Spaceships, Spaceship } from '../data/interfaces';
 import Filters from './Filters';
 import Card from './Card';
+import { endeavour, atlantis, columbia, enterprise } from '../data/spaceships';
 
 function App() {
-  const [fruits, setfruits] = useState<Fruits | null>(null);
-  const [selectedFruits, setselectedFruits] = useState<Fruits | null>(null);
+  const [spaceships, setSpacehips] = useState<Spaceships | null>(null);
+  const [selectedSpaceships, setselectedSpaceships] = useState<Spaceships | null>(null);
   const [filterInput, setfilterInput] = useState('');
 
-  const apple = {
-    name: 'apple',
-    id: 'apple',
-  };
-  const melon = {
-    name: 'melon',
-    id: 'melon',
-  };
-  const banana = {
-    name: 'banana',
-    id: 'banana',
-  };
-
   useEffect(() => {
-    setfruits({ list: [apple, melon, banana] });
-    setselectedFruits({ list: [] });
+    setSpacehips({ list: [endeavour, atlantis, columbia, enterprise] });
+    setselectedSpaceships({ list: [] });
   }, []);
 
   const clearLists = () => {
-    setfruits({ list: [apple, melon, banana] });
-    setselectedFruits({ list: [] });
+    setSpacehips({ list: [endeavour, atlantis, columbia, enterprise] });
+    setselectedSpaceships({ list: [] });
     setfilterInput('');
   };
 
-  const onClickFruit = (selectedFruit: Fruit) => {
-    setselectedFruits({ list: [...selectedFruits!.list, selectedFruit] });
-    setfruits({ list: fruits!.list.filter((fruit) => fruit !== selectedFruit) });
+  const onClickSpaceship = (selectedSpaceship: Spaceship) => {
+    setselectedSpaceships({ list: [...selectedSpaceships!.list, selectedSpaceship] });
+    setSpacehips({ list: spaceships!.list.filter((spaceship) => spaceship !== selectedSpaceship) });
   };
 
   const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,40 +32,40 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <h1>HELLO WORLD </h1>
-      <div>
-        <Filters
-          onFilterChange={onFilterChange}
-          clearLists={clearLists}
-          filterInput={filterInput}
-        />
-      </div>
-      <div>
-        <h2>To Select</h2>
-        {fruits && (
-          <ul>
-            {fruits.list
-              .filter((fruit) => fruit.name.toLocaleLowerCase().includes(filterInput))
-              .map((fruit) => (
-                <Card onClickFruit={onClickFruit} fruit={fruit} />
-                // <li key={fruit.id} onClick={() => onClickFruit(fruit)}>
-                //   {fruit.name}
-                // </li>
+    <main>
+      <header className='header'>
+        <h1 className='header__title'>Spaceships</h1>
+      </header>
+      <Filters onFilterChange={onFilterChange} clearLists={clearLists} filterInput={filterInput} />
+      <div className='spaceship__wrapper'>
+        <div className='spaceship__inner'>
+          <h2>List of Spaceships</h2>
+          {spaceships && (
+            <ul>
+              {spaceships.list
+                .filter((spaceship) => spaceship.name.toLocaleLowerCase().includes(filterInput))
+                .map((spaceship) => (
+                  <li key={spaceship.id} onClick={() => onClickSpaceship(spaceship)}>
+                    <Card fruitName={spaceship.name} />
+                  </li>
+                ))}
+            </ul>
+          )}
+        </div>
+        <div className='spaceship__inner'>
+          <h2>Selected spacehips</h2>
+          {selectedSpaceships && (
+            <ul>
+              {selectedSpaceships.list.map((spaceship) => (
+                <li key={spaceship.id}>
+                  <Card fruitName={spaceship.name} />
+                </li>
               ))}
-          </ul>
-        )}
-        <h2>Selected ones</h2>
-        {selectedFruits && (
-          <ul>
-            {selectedFruits.list.map((fruit) => (
-              <li key={fruit.id}>{fruit.name}</li>
-              // <Card fruit={fruit}  onClickFruit= {undefined}/>
-            ))}
-          </ul>
-        )}
+            </ul>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -1,4 +1,4 @@
-// import '../styles/Filters.css';
+import '../styles/Filters.css';
 
 interface Props {
   clearLists: () => void;
@@ -8,17 +8,20 @@ interface Props {
 
 function Filters({ clearLists, onFilterChange, filterInput }: Props) {
   return (
-    <>
-      <label htmlFor='textFilter' aria-label='text filter' />
-      <input
-        type='text'
-        id='textFilter'
-        name='textFilter'
-        value={filterInput}
-        onChange={(e) => onFilterChange(e)}
-      />
-      <button onClick={clearLists}>Clear</button>
-    </>
+    <div className='filters__wrapper'>
+      <div>
+        <label htmlFor='textFilter' aria-label='text filter' />
+        <input
+          type='text'
+          id='textFilter'
+          name='textFilter'
+          value={filterInput}
+          placeholder='Type to search'
+          onChange={(e) => onFilterChange(e)}
+        />
+      </div>
+      <button onClick={clearLists}>Clear all! </button>
+    </div>
   );
 }
 

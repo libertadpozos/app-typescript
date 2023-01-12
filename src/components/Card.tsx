@@ -1,18 +1,14 @@
-// import '../styles/Card.css';
-import { Fruit } from '../interfaces';
+import '../styles/Card.css';
 
-type Props = {
-  fruit: Fruit;
-  onClickFruit: (selectedFruit: Fruit) => void | undefined;
-};
+interface Props {
+  fruitName: string;
+}
 
-function Card({ fruit, onClickFruit }: Props) {
+function Card({ fruitName }: Props) {
   return (
-    <>
-      <li key={fruit.id} onClick={() => onClickFruit(fruit)}>
-        {fruit.name}
-      </li>
-    </>
+    <div className='card'>
+      <p>{fruitName}</p>
+    </div>
   );
 }
 
