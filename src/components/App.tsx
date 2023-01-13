@@ -5,6 +5,7 @@ import { Spaceships, Spaceship } from '../data/interfaces';
 import Filters from './Filters';
 import Card from './Card';
 import { endeavour, atlantis, columbia, enterprise } from '../data/spaceships';
+import Header from './Header';
 
 function App() {
   const [spaceships, setSpacehips] = useState<Spaceships | null>(null);
@@ -33,9 +34,7 @@ function App() {
 
   return (
     <main>
-      <header className='header'>
-        <h1 className='header__title'>Spaceships</h1>
-      </header>
+      <Header />
       <Filters onFilterChange={onFilterChange} clearLists={clearLists} filterInput={filterInput} />
       <div className='spaceship__wrapper'>
         <div className='spaceship__inner'>
